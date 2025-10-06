@@ -1,7 +1,8 @@
-version: '3.8'
+# version: '3.8'  # (removido porque é obsoleto)
+
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -10,11 +11,10 @@ services:
       POSTGRES_PASSWORD: password
     networks:
       - mynetwork
-  backend:
-  frontend:
 
 networks:
-  mynetworks:
+  mynetwork:   # <- nome corrigido (sem 's')
+    driver: bridge
 
 volumes: #docker voce vai poder olhar esse path e criar um arquivo aqui
   postgres_data:
