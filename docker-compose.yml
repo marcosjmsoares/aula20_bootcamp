@@ -1,18 +1,18 @@
-# version: '3.8'  # (removido porque é obsoleto)
-
+version: '3.8'
 services:
   postgres:
-    image: postgres:15
+    image: postgres:latest
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data/pgdata
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgvvresql/data/pgdata
     networks:
       - mynetwork
 
-backend:
+  backend:
     build: 
       context: ./backend
       dockerfile: Dockerfile
@@ -27,10 +27,19 @@ backend:
     networks:
       - mynetwork
 
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "8501:8501"
+    networks:
+      - mynetwork
 
 networks:
-  mynetwork:   # <- nome corrigido (sem 's')
-    driver: bridge
+  mynetwork:
 
-volumes: #docker voce vai poder olhar esse path e criar um arquivo aqui
+volumes:
   postgres_data:
