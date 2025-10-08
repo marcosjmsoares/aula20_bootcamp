@@ -21,6 +21,8 @@ def create_product_route(product: ProductCreate, db: Session = Depends(get_db)):
 
 @router.get("/products/", response_model=List[ProductResponse])
 def read_all_products_route(db: Session = Depends(get_db)):
+    """
+    essa e minha rota de ler todos os produtos do banco de dados"""
     products = get_products(db)
     return products
 
